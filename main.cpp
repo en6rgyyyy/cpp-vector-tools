@@ -2,109 +2,119 @@
 #include <vector>
 #include <stdexcept>
 
-template<typename T> T max(const std::vector<T>& arr);
-template<typename T> T min(const std::vector<T>& arr);
-template<typename T> T sum(const std::vector<T>& arr);
-template<typename T> void conclusion(const std::vector<T>& arr);
+
+template<class T>
+class Tools
+{
+private:
+	std::vector<T> arr;
+public:
+	Tools(std::vector<T> arr) : arr{ arr } {}
+
+	void add(T n) { arr.push_back(n); }
+
+	T max()
+	{
+		if (arr.empty())
+		{
+			throw std::invalid_argument("Arr empty!");
+		}
+
+		else
+		{
+			auto maxN = arr[0];
+
+			for (auto r : arr)
+			{
+				if (maxN < r)
+					maxN = r;
+			}
+
+			return maxN;
+		}
+	}
+
+	T min()
+	{
+		if (arr.empty())
+		{
+			throw std::invalid_argument("Arr empty!");
+		}
+
+		else
+		{
+			auto minN = arr[0];
+
+			for (auto r : arr)
+			{
+				if (minN > r)
+					minN = r;
+			}
+
+			return minN;
+		}
+	}
+
+	T sum()
+	{
+		if (arr.empty())
+		{
+			throw std::invalid_argument("Arr empty!");
+		}
+
+		else
+		{
+			auto sum = T{};
+
+			for (auto r : arr)
+				sum += r;
+
+			return sum;
+		}
+	}
+
+	void conclusion()
+	{
+		if (arr.empty())
+		{
+			throw std::invalid_argument("Arr empty!");
+		}
+
+		else
+		{
+			for (size_t i{}; i < arr.size(); i++)
+			{
+				if (i == arr.size() - 1)
+					std::cout << arr[i];
+				else
+					std::cout << arr[i] << ", ";
+			}
+		}
+	}
+};
+
 
 int main()
 {
 	try
 	{
 		std::vector<float> arr;
+		Tools<float> Arr{ arr };
 
-		arr.push_back(0.5f);
-		arr.push_back(22.3f);
-		arr.push_back(9.9f);
+		Arr.add(3.4f);
+		Arr.add(5.8f);
+		Arr.add(10.1f);
 
-		std::cout << "Arr: "; conclusion(arr);
+		std::cout << "Arr: "; Arr.conclusion();
 
-		std::cout << "\n\nMax: " << max(arr) << "\n"
-			<< "Min: " << min(arr) << "\n"
-			<< "Sum: " << sum(arr) << "\n";
+		std::cout 
+			<< "\n\nMax: " << Arr.max() << "\n"
+			<< "Min: " << Arr.min() << "\n"
+			<< "Sum: " << Arr.sum() << "\n";
 	} 
 
 	catch (const std::invalid_argument& e)
 	{
 		std::cout << "\n\n+ Error " << e.what() << " +\n";
-	}
-}
-
-template<typename T> T max(const std::vector<T>& arr)
-{
-	if (arr.empty())
-	{
-		throw std::invalid_argument("Arr empty!");
-	}
-
-	else
-	{
-		auto maxN = arr[0];
-
-		for (auto r : arr)
-		{
-			if (maxN < r)
-				maxN = r;
-		}
-
-		return maxN;
-	}
-}
-
-template<typename T> T min(const std::vector<T>& arr)
-{
-	if (arr.empty())
-	{
-		throw std::invalid_argument("Arr empty!");
-	}
-
-	else
-	{
-		auto minN = arr[0];
-
-		for (auto r : arr)
-		{
-			if (minN > r)
-				minN = r;
-		}
-
-		return minN;
-	}
-}
-
-template<typename T> T sum(const std::vector<T>& arr)
-{
-	if (arr.empty())
-	{
-		throw std::invalid_argument("Arr empty!");
-	}
-
-	else
-	{
-		auto sum = T{};
-
-		for (auto r : arr)
-			sum += r;
-
-		return sum;
-	}
-}
-
-template<typename T> void conclusion(const std::vector<T>& arr)
-{
-	if (arr.empty())
-	{
-		throw std::invalid_argument("Arr empty!");
-	}
-
-	else
-	{
-		for (size_t i{}; i < arr.size(); i++)
-		{
-			if (i == arr.size() - 1)
-				std::cout << arr[i];
-			else
-				std::cout << arr[i] << ", ";
-		}
 	}
 }
